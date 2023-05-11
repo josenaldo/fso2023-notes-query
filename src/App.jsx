@@ -1,4 +1,6 @@
 import React from 'react'
+import { useQuery } from 'react-query'
+import { getNotes } from './requests'
 
 import './App.css'
 
@@ -14,7 +16,15 @@ const App = () => {
     console.log('toggle importance of', note.id)
   }
 
-  const notes = []
+  const result = useQuery('notes', getNotes)
+
+  console.log('🔴', result)
+
+  if (result.isLoading) {
+    return <div>Loading data...</div>
+  }
+
+  const notes = result.data
 
   return (
     <div className="container">
